@@ -46,15 +46,18 @@ SELECT create_distributed_hypertable('state', 'time', 'owner');
 1. At `docker-compose.yml` file add this lines below
 ```
     pg-data-node-4:
-        image: timescaledev/timescaledb:pg12-ts2.0.0-beta5
-        hostname: pg-data-node-4
-        environment:
-        - POSTGRES_PASSWORD=coffee
-        - POSTGRES_HOST_ACCESS_NODE=pg-access-node
-        - POSTGRES_PASSWORD_ACCESS_NODE=tea
-        volumes:
-        - ./updateConfigDataNode.sh:/docker-entrypoint-initdb.d/_updateConfig.sh
-        - ./docker-entrypoint-listen.sh:/docker-entrypoint.sh
+    image: timescaledev/timescaledb:pg12-ts2.0.0-beta5
+    hostname: pg-data-node-4
+    environment:
+      - POSTGRES_USER=user-name
+      - POSTGRES_PASSWORD=dataNodePass
+      ## Acess Node Configuration for node register
+      - POSTGRES_HOST_ACCESS_NODE=pg-access-node
+      - POSTGRES_DB_ACCESS_NODE=db-name
+      - POSTGRES_PASSWORD_ACCESS_NODE=accessNodePass
+    volumes:
+      - ./updateConfigDataNode.sh:/docker-entrypoint-initdb.d/_updateConfig.sh
+      - ./docker-entrypoint-listen.sh:/docker-entrypoint.sh
 ```
 2. Run the docker-compose up command to create/update your existing containers.
 ```
