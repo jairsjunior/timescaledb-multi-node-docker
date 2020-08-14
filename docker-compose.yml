@@ -1,0 +1,59 @@
+version: "3.7"
+
+services:
+  pg-access-node:
+    image: timescaledev/timescaledb:pg12-ts2.0.0-beta5
+    container_name: pg-access-node
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=user-name
+      - POSTGRES_PASSWORD=accessNodePass
+      - POSTGRES_DB=db-name
+      ## Data Node Configuration
+      - POSTGRES_PASSWORD_DATA_NODE=dataNodePass
+    volumes:
+      - ./updateConfigAccessNode.sh:/docker-entrypoint-initdb.d/_updateConfig.sh
+
+  pg-data-node-1:
+    image: timescaledev/timescaledb:pg12-ts2.0.0-beta5
+    environment:
+      - POSTGRES_USER=user-name
+      - POSTGRES_PASSWORD=dataNodePass
+      ## Acess Node Configuration for node register
+      - POSTGRES_HOST_ACCESS_NODE=pg-access-node
+      - POSTGRES_DB_ACCESS_NODE=db-name
+      - POSTGRES_PASSWORD_ACCESS_NODE=accessNodePass
+    volumes:
+      - ./updateConfigDataNode.sh:/docker-entrypoint-initdb.d/_updateConfig.sh
+      - ./docker-entrypoint-listen.sh:/docker-entrypoint.sh
+    
+  pg-data-node-2:
+    image: timescaledev/timescaledb:pg12-ts2.0.0-beta5
+    environment:
+      - POSTGRES_USER=user-name
+      - POSTGRES_PASSWORD=dataNodePass
+      ## Acess Node Configuration for node register
+      - POSTGRES_HOST_ACCESS_NODE=pg-access-node
+      - POSTGRES_DB_ACCESS_NODE=db-name
+      - POSTGRES_PASSWORD_ACCESS_NODE=accessNodePass
+    volumes:
+      - ./updateConfigDataNode.sh:/docker-entrypoint-initdb.d/_updateConfig.sh
+      - ./docker-entrypoint-listen.sh:/docker-entrypoint.sh
+          
+  pg-data-node-3:
+    image: timescaledev/timescaledb:pg12-ts2.0.0-beta5
+    environment:
+      - POSTGRES_USER=user-name
+      - POSTGRES_PASSWORD=dataNodePass
+      ## Acess Node Configuration for node register
+      - POSTGRES_HOST_ACCESS_NODE=pg-access-node
+      - POSTGRES_DB_ACCESS_NODE=db-name
+      - POSTGRES_PASSWORD_ACCESS_NODE=accessNodePass
+    volumes:
+      - ./updateConfigDataNode.sh:/docker-entrypoint-initdb.d/_updateConfig.sh
+      - ./docker-entrypoint-listen.sh:/docker-entrypoint.sh
+  
+  
+    
+
