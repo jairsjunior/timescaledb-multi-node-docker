@@ -2,7 +2,7 @@
 
 At version 2 (in beta, no production recommended), timescale will had a new functionality that distribute hypertables over different data nodes chunks. This repository contains all you need to setup this using docker locally at your machine.
 
-![Architecture](https://user-images.githubusercontent.com/31451796/90265283-baaa4300-de28-11ea-8f12-23f04b78070f.png)
+![Architecture](https://user-images.githubusercontent.com/31451796/90265828-82efcb00-de29-11ea-81cf-4c42a9634eaa.png)
 
 ## Requirements
 
